@@ -138,6 +138,37 @@ app.get('/books/:isbn', (req, res) => {
     res.status(404).send('Book not found')
 })
 
+// delete book from isbn
+app.delete('/books/:isbn', (req, res) => {
+    // reading isbn from url
+    const isbn = req.params.isbn
+
+    // remove book from books array
+    books = books.filter(i => {
+        if(i.isbn !== isbn) {
+            return true
+        }
+        return false
+    })
+
+    res.send('Book is deleted')
+})
+
+// updating/editing book from isbn
+app.post('/books/:isbn', (req, res) => {
+    // reading isbn from url
+    const isbn = req.params.isbn
+    const newBook = req.body
+
+    // remove item from books array
+    for (let i = 0; i < books.length; i++) {
+        let book = books[i]
+        if(book.isbn === isbn) {
+            books[i] = newBook
+        }
+    }
+    res.send('Book is edited')
+})
 
 
 app.listen(port, () => {
